@@ -6,7 +6,7 @@ export default class Bus implements IBus{
   prog:Program
   constructor(prog:Program){
     console.log("made a bus");
-    this.prog = reactive(prog)
+    this.prog = prog
   }
   handle(data:DragData){
     const draggedBlock: Block | Item | null = this.getById(data.draggedItemId)
@@ -24,36 +24,45 @@ export default class Bus implements IBus{
     }
   }
   getById(id:string): Block | Item | null{
-    const _getById = (blockList:BlockList): Block | Item | null=>{
-      for(const block of blockList){
-        if(block.id === id){
-          return block
-        }
-        else if(block.type === "h"){
-          for(const child of block.children){
-            if(child.id === id){
-              return child
-            }
-          }
-        }
-        else{
-          if(block.top.id === id){
-            return block.top
-          }
-          for(const child of block.top.children){
-            if(child.id === id){
-              return child
-            }
-          }
-          const child = _getById(block.children)
-          if(child){
+
+    const _getByIdInBlock = (block: Block): Block | Item | null=>{
+      if(block.id === id){
+        return block
+      }
+      else if(block.type === "h"){
+        for(const child of block.children){
+          if(child.id === id){
             return child
           }
         }
       }
+      else{
+        if(block.top.id === id){
+          return block.top
+        }
+        for(const child of block.top.children){
+          if(child.id === id){
+            return child
+          }
+        }
+        const child = _getById(block.children)
+        if(child){
+          return child
+        }
+      }
       return null
     }
-    return _getById(this.prog.blocks)
+
+    const _getById = (blockList:BlockList): Block | Item | null=>{
+      for(const block of blockList){
+        const inBlock = _getByIdInBlock(block)
+        if(inBlock){
+          return inBlock
+        }
+      }
+      return null
+    }
+    return _getById(this.prog.blocks) || _getByIdInBlock(this.prog.snippets)
   }
   getParentForId(id:string): Block | null{ 
 

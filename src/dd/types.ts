@@ -1,5 +1,6 @@
 export type Program = {
-    blocks: BlockList
+    blocks: BlockList,
+    snippets: HBlock
 }
 
 export type Block = HBlock | IBlock

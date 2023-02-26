@@ -1,12 +1,17 @@
-import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import Bus from '@/dd/Bus'
+import { HBlock } from '@/dd/types';
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
+describe('Bus', () => {
+  it('gets by id', () => {
+    const snippets:HBlock = {
+      type: "h",
+      id:"0",
+      children:[]
+    }
+    const bus = new Bus({
+      blocks:[],
+      snippets
+    });
+    expect(bus.getById("0")).toEqual(snippets)
   })
 })

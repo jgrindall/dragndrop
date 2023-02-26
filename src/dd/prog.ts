@@ -1,4 +1,4 @@
-import { BlockList, Program } from "./types"
+import { BlockList, Program, Item, HBlock } from "./types"
 
 
 /**
@@ -97,6 +97,27 @@ export const blocks:BlockList = [
     }
 ]
 
+const snippets:HBlock = {
+    type: "h",
+    id:id(),
+    children:[
+        {
+            id:id(),
+            text: "add this"
+        },
+        {
+            id:id(),
+            text: "add this too"
+        },
+        {
+            id:id(),
+            text: "and this"
+        }
+    ]
+}
+
+
 export const prog:Program = {
-    blocks: blocks
+    blocks: blocks,
+    snippets:snippets
 }

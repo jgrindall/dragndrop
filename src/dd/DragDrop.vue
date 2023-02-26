@@ -1,14 +1,25 @@
 <template>
-  <div class="program">
-    <BlockListRenderer :blocks="prog.blocks" :bus="bus"></BlockListRenderer>
+  <div>
+    
+    <div class="program">
+      <BlockListRenderer :blocks="prog.blocks" :bus="bus"></BlockListRenderer>
+    </div>
+    
+    <hr/>
+
+    <div class="snippets">
+      <HBlockRenderer :bus="bus" :block="prog.snippets"></HBlockRenderer>
+    </div>
   </div>
+  
 </template>
 
 <script lang="ts">
-import {Program, Block, HBlock} from "./types"
+import {Program} from "./types"
 import { PropType, defineComponent } from 'vue';
 import * as _ from 'underscore'
 import Bus from "./Bus"
+import HBlockRenderer from "./HBlockRenderer.vue";
 
 type State = {
   bus: Bus
@@ -17,7 +28,7 @@ type State = {
 export default defineComponent({
   name: 'DragDrop',
   components: {
-
+    HBlockRenderer
   },
   data():State{
     return {
