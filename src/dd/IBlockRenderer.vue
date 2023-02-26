@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts">
-import {Program, IBlock, IBus} from "./types"
-import { ref,PropType, defineComponent } from 'vue';
+import { IBlock, IBus} from "./types"
+import { PropType, defineComponent } from 'vue';
 import HBlockRenderer from "./HBlockRenderer.vue";
 
 export default defineComponent({

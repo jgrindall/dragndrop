@@ -5,21 +5,13 @@
 </template>
 
 <script lang="ts">
-import {Program, IBus} from "./types"
-import { ref,PropType, defineComponent, VueElement } from 'vue';
-import { buildSlots } from "@vue/compiler-core";
+import {Program} from "./types"
+import { PropType, defineComponent } from 'vue';
+import * as _ from 'underscore'
+import Bus from "./Bus"
 
 type State = {
   bus: Bus
-}
-
-class Bus implements IBus{
-  constructor(){
-    console.log("made a bus");
-  }
-  handle(obj:any){
-    console.log(obj);
-  }
 }
 
 export default defineComponent({
@@ -27,9 +19,15 @@ export default defineComponent({
   components: {
 
   },
+  created(){
+   // this.bus = new Bus(this.prog)
+   setTimeout(()=>{
+    this.bus.something()
+   }, 2500)
+  },
   data():State{
     return {
-      bus: new Bus()
+      bus: new Bus(this.prog)
     }
   },
   props:{
@@ -39,9 +37,7 @@ export default defineComponent({
     }
   },
   methods:{
-    getBus(): Bus{
-      return new Bus
-    } 
+   
   }
 });
 </script>

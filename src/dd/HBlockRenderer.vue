@@ -8,27 +8,29 @@
     @dragover="checkDrop($event)"
 >
       <div
-      v-for="(child, i) in block.children"
-      :key="'child' + i"
-      class="hchild draggable"
-      draggable="true"
-      @dragstart="startDrag($event, child)"
+        v-for="(child, i) in block.children"
+        :key="'child' + i"
+        class="hchild draggable"
+        draggable="true"
+        @dragstart="startDrag($event, child)"
       >
-      {{ child.text }}
+      <ItemRenderer :item="child"></ItemRenderer>
     </div>
+    <span class="id">{{ block.id }}</span>
   </div>
 
 </template>
 
 <script lang="ts">
-import {Program, HBlock, Item, IBus} from "./types"
-import { ref,PropType, defineComponent } from 'vue';
+import { HBlock, Item, IBus} from "./types"
+import { PropType, defineComponent } from 'vue';
+import ItemRenderer from "./ItemRenderer.vue";
 
 export default defineComponent({
   name: 'HBlockRenderer',
   components: {
-
-  },
+    ItemRenderer
+},
   props:{
     bus:{
       required:true,
@@ -42,12 +44,14 @@ export default defineComponent({
   methods:{
     startDrag(event:DragEvent, child:Item){
       console.log("start", event, child)
-      event.dataTransfer?.setData("item", child.id);
+      event.dataTransfer?.setData("draggedItemId", child.id);
     },
     onDrop(event:any){
-      console.log("drop", event)
-      console.log(event.dataTransfer.getData("item"))
-      this.bus.handle({a:this.block, b:event.dataTransfer.getData("item")})
+      const draggedItemId = event.dataTransfer.getData("draggedItemId")
+      this.bus.handle({
+        dropTarget:this.block,
+        draggedItemId
+      })
     },
     checkDrop(event:any){
       event.preventDefault()
@@ -62,6 +66,12 @@ export default defineComponent({
   background: hotpink;
   display: flex;
   margin:5px;
+}
+.id{
+  font-size: 14px;
+  opacity: 0.666;
+  margin-left: auto;
+  padding:5px
 }
 .hchild{
   margin:5px;

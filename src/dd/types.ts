@@ -24,6 +24,13 @@ export type IBlock = {
     children:BlockList
 }
 
-export interface IBus{
-    handle:(obj:any)=>void
+export type DragData = {
+    dropTarget: Block,
+    draggedItemId: Item["id"]
 }
+
+export interface IBus{
+    handle:(obj:DragData)=>void
+    something:()=>void
+}
+

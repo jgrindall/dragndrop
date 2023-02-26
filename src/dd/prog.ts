@@ -11,52 +11,59 @@ while i < 100:
 
  */
 
+let _id = 0
+
+const id = ():string=>{
+    _id++
+    return "" + _id
+}
+
 export const blocks:BlockList = [
     {
         type: "h",
-        id:"1",
+        id:id(),
         children:[
             {
-                id:"1",
+                id:id(),
                 text: "i = 2"
             },
             {
-                id:"2",
+                id:id(),
                 text: "*"
             },
             {
-                id:"3",
+                id:id(),
                 text: "j"
             },
             {
-                id:"4",
+                id:id(),
                 text: "+ k*k"
             }
         ]
     },
     {
         type: "h",
-        id:"4",
+        id:id(),
         children:[
             {
-                id:"5",
+                id:id(),
                 text: "j = "
             },
             {
-                id:"6",
+                id:id(),
                 text: "0"
             }
         ]
     },
     {
         type: "i",
-        id:"8",
+        id:id(),
         top:{
-            id:"9",
+            id:id(),
             type: "h",
             children:[
                 {
-                    id:"10",
+                    id:id(),
                     text: "while i < 100:"
                 }
             ]
@@ -64,24 +71,24 @@ export const blocks:BlockList = [
         children:[
             {
                 type: "h",
-                id:"13",
+                id:id(),
                 children:[
                     {
-                        id:"11",
+                        id:id(),
                         text: "j = "
                     },
                     {
-                        id:"12",
+                        id:id(),
                         text: "0"
                     }
                 ]
             },
             {
-                id:"14",
+                id:id(),
                 type: "h",
                 children:[
                     {
-                        id:"15",
+                        id:id(),
                         text: "i += 1"
                     }
                 ]
