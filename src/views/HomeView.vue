@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import DragDrop from '@/dd/DragDrop.vue';
 import {prog} from '@/dd/prog'
 import {Program} from '@/dd/types'
@@ -17,7 +17,7 @@ export default defineComponent({
   },
   methods:{
     getProgram(): Program{
-      return prog
+      return reactive(prog)
     } 
   }
 

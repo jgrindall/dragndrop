@@ -31,6 +31,5 @@ export type DragData = {
 
 export interface IBus{
     handle:(obj:DragData)=>void
-    something:()=>void
 }
 

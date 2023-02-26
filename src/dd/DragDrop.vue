@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import {Program} from "./types"
+import {Program, Block, HBlock} from "./types"
 import { PropType, defineComponent } from 'vue';
 import * as _ from 'underscore'
 import Bus from "./Bus"
@@ -18,12 +18,6 @@ export default defineComponent({
   name: 'DragDrop',
   components: {
 
-  },
-  created(){
-   // this.bus = new Bus(this.prog)
-   setTimeout(()=>{
-    this.bus.something()
-   }, 2500)
   },
   data():State{
     return {

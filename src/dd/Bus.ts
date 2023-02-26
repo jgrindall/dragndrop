@@ -1,25 +1,25 @@
 import * as _ from 'underscore'
+import { reactive } from 'vue';
 import {DragData, Block, HBlock, Item, IBlock, IBus, Program, BlockList} from "./types"
 
 export default class Bus implements IBus{
-  constructor(private prog:Program){
+  prog:Program
+  constructor(prog:Program){
     console.log("made a bus");
-  }
-  something(){
-    alert("something")
-    this.prog.blocks[0].children = []
+    this.prog = reactive(prog)
   }
   handle(data:DragData){
-    console.log(data.draggedItemId, "->", data.dropTarget)
     const draggedBlock: Block | Item | null = this.getById(data.draggedItemId)
-    console.log('draggedBlock', draggedBlock, (draggedBlock as any).value)
     if(draggedBlock){
       const parentOfDraggedBlock: Block | null = this.getParentForId(data.draggedItemId)
-      console.log('parentOfDraggedBlock', parentOfDraggedBlock, (parentOfDraggedBlock as any).value)
       if(parentOfDraggedBlock && parentOfDraggedBlock.type === "h"){
-        console.log(parentOfDraggedBlock.children)
         parentOfDraggedBlock.children = _.without(parentOfDraggedBlock.children, draggedBlock as Item)
-        console.log(parentOfDraggedBlock.children)
+        if(data.dropTarget.type === "h"){
+          data.dropTarget.children = [
+            ...data.dropTarget.children,
+            draggedBlock as Item
+          ]
+        }
       }
     }
   }
