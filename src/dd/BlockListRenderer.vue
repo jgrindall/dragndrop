@@ -1,32 +1,36 @@
 <template>
-   <div v-for="(block, i) in blocks" class="block" :key="'block' + i">
+  <div>
+    <div v-for="(block, i) in blocks" class="block" :key="'block' + i">
       <div v-if="block.type === 'h'">
-        <HBlockRenderer :block="block" :bus="bus"></HBlockRenderer>
+        <HBlockRenderer :block="block"></HBlockRenderer>
       </div>
       <div v-else-if="block.type === 'i'">
-        <IBlockRenderer :block="block" :bus="bus"></IBlockRenderer> 
+        <IBlockRenderer :block="block"></IBlockRenderer> 
       </div>
     </div>
+  </div>
+   
 
 </template>
 
 <script lang="ts">
 import { IBus, BlockList} from "./types"
-import { PropType, defineComponent } from 'vue';
+import { PropType, defineComponent, inject } from 'vue';
 import HBlockRenderer from "./HBlockRenderer.vue";
 import IBlockRenderer from "./IBlockRenderer.vue";
 
 export default defineComponent({
   name: 'BlockListRenderer',
+  setup () {
+    return {
+      bus: inject<IBus>('bus')
+    }
+  },
   components: {
     HBlockRenderer,
     IBlockRenderer
-},
+  },
   props:{
-    bus:{
-      required:true,
-      type: Object as PropType<IBus>
-    },
     blocks:{
       required:true,
       type: Object as PropType<BlockList>

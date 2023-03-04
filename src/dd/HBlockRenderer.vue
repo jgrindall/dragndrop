@@ -25,17 +25,19 @@
 import { HBlock, Item, IBus} from "./types"
 import { PropType, defineComponent } from 'vue';
 import ItemRenderer from "./ItemRenderer.vue";
+import { inject } from 'vue'
 
 export default defineComponent({
   name: 'HBlockRenderer',
+  setup () {
+    return {
+      bus: inject<IBus>('bus')
+    }
+  },
   components: {
     ItemRenderer
-},
+  },
   props:{
-    bus:{
-      required:true,
-      type: Object as PropType<IBus>
-    },
     block:{
       required:true,
       type: Object as PropType<HBlock>
@@ -48,7 +50,8 @@ export default defineComponent({
     },
     onDrop(event:any){
       const draggedItemId = event.dataTransfer.getData("draggedItemId")
-      this.bus.handle({
+      const bus = this.bus as IBus
+      bus.handle({
         dropTarget:this.block,
         draggedItemId
       })

@@ -9,9 +9,12 @@ export default class Bus implements IBus{
     this.prog = prog
   }
   handle(data:DragData){
+    console.log("handle", data);
     const draggedBlock: Block | Item | null = this.getById(data.draggedItemId)
+    console.log("draggedBlock", draggedBlock);
     if(draggedBlock){
       const parentOfDraggedBlock: Block | null = this.getParentForId(data.draggedItemId)
+      console.log("parentOfDraggedBlock", parentOfDraggedBlock);
       if(parentOfDraggedBlock && parentOfDraggedBlock.type === "h"){
         parentOfDraggedBlock.children = _.without(parentOfDraggedBlock.children, draggedBlock as Item)
         if(data.dropTarget.type === "h"){

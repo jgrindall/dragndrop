@@ -2,13 +2,13 @@
   <div>
     
     <div class="program">
-      <BlockListRenderer :blocks="prog.blocks" :bus="bus"></BlockListRenderer>
+      <BlockListRenderer :blocks="prog.blocks"></BlockListRenderer>
     </div>
     
     <hr/>
 
     <div class="snippets">
-      <HBlockRenderer :bus="bus" :block="prog.snippets"></HBlockRenderer>
+      <HBlockRenderer :block="prog.snippets"></HBlockRenderer>
     </div>
   </div>
   
@@ -29,6 +29,12 @@ export default defineComponent({
   name: 'DragDrop',
   components: {
     HBlockRenderer
+  },
+  provide() {
+    this.bus = this.bus || new Bus(this.prog)
+    return {
+      bus: this.bus
+    }
   },
   data():State{
     return {

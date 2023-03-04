@@ -1,3 +1,5 @@
+import { InjectionKey } from 'vue';
+
 export type Program = {
     blocks: BlockList,
     snippets: HBlock
@@ -33,4 +35,3 @@ export type DragData = {
 export interface IBus{
     handle:(obj:DragData)=>void
 }
-
