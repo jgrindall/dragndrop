@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { IBus, BlockList, BlockTypes, Block} from "./types"
+import { IBus, BlockTypes, Block} from "./types"
 import { PropType, defineComponent, inject } from 'vue';
 import HFlowBlockRenderer from "./HFlowBlockRenderer.vue";
 import IndentedBlockRenderer from "./IndentedBlockRenderer.vue";
@@ -39,12 +39,15 @@ export default defineComponent({
   props:{
     blocks:{
       required:true,
-      type: Object as PropType<BlockList>
+      type: Object as PropType<Block[]>
     }
   }
 });
 </script>
 
 <style scoped>
-
+  .block{
+    margin-top:12px;
+    margin-bottom:12px;
+  }
 </style>

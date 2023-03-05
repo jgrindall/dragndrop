@@ -1,6 +1,6 @@
-import * as _ from 'underscore'
+import {without} from 'underscore'
 import { reactive } from 'vue';
-import {DragData, Block, HBlock, Item, IBlock, IBus, Program, BlockList, BlockTypes} from "./types"
+import {DragData, Block, HBlock, Item, IBlock, IBus, Program, BlockTypes} from "./types"
 
 export default class Bus implements IBus{
   prog:Program
@@ -16,12 +16,7 @@ export default class Bus implements IBus{
       const parentOfDraggedBlock: Block | null = this.getParentForId(data.draggedItemId)
       console.log("parentOfDraggedBlock", parentOfDraggedBlock);
       if(parentOfDraggedBlock && parentOfDraggedBlock.type === BlockTypes.HFLOW){
-        parentOfDraggedBlock.children = _.without(parentOfDraggedBlock.children, draggedBlock as Item)
-        const isEmpty = parentOfDraggedBlock.children.length === 0
-        if(isEmpty){
-           const parentOfParent = this.getParentForId(parentOfDraggedBlock.id)
-           console.log(parentOfParent, 'deletes', parentOfDraggedBlock)
-        }
+        parentOfDraggedBlock.children = without(parentOfDraggedBlock.children, draggedBlock as Item)
         if(data.dropTarget.type === BlockTypes.HFLOW){
           data.dropTarget.children = [
             ...data.dropTarget.children,
@@ -33,7 +28,27 @@ export default class Bus implements IBus{
     this.deleteEmpty()
   }
   deleteEmpty(){
-    console.log("de")
+
+    const deleteEmptyIndented = (block: IBlock)=>{
+      block.children.forEach( (childBlock:Block)=>{
+        if(childBlock.type === BlockTypes.HFLOW){
+          if(childBlock.children.length === 0){
+            block.children = without(block.children, childBlock)
+          }
+        }
+        else{
+          deleteEmptyIndented(childBlock)
+        }
+      })
+    }
+    this.prog.blocks.forEach((childBlock:Block)=>{
+      if(childBlock.type === BlockTypes.INDENTED){
+        deleteEmptyIndented(childBlock)
+      }
+      else if(childBlock.children.length === 0){
+        this.prog.blocks = without(this.prog.blocks, childBlock)
+      }
+    })
   }
   getById(id:string): Block | Item | null{
 
@@ -65,7 +80,7 @@ export default class Bus implements IBus{
       return null
     }
 
-    const _getById = (blockList:BlockList): Block | Item | null=>{
+    const _getById = (blockList:Block[]): Block | Item | null=>{
       for(const block of blockList){
         const inBlock = _getByIdInBlock(block)
         if(inBlock){
@@ -93,7 +108,7 @@ export default class Bus implements IBus{
       return false
     }
 
-    const _getParentForId = (blockList:BlockList): Block | null=>{
+    const _getParentForId = (blockList:Block[]): Block | null=>{
       for(const block of blockList){
         const inBlock = _isChildOfBlock(block)
           if(inBlock){

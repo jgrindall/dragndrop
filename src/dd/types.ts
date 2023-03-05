@@ -1,11 +1,9 @@
 export type Program = {
-    blocks: BlockList,
+    blocks: Block[],
     snippets: HBlock
 }
 
 export type Block = HBlock | IBlock
-
-export type BlockList = Block[]
 
 export type Item = {
     id:string,
@@ -27,7 +25,7 @@ export type IBlock = {
     type: BlockTypes.INDENTED,
     id:string,
     top:HBlock,
-    children:BlockList
+    children:Block[]
 }
 
 export type DragData = {

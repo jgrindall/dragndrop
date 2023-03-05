@@ -1,4 +1,4 @@
-import { BlockList, Program, Item, HBlock, BlockTypes } from "./types"
+import { Program, Item, HBlock, BlockTypes, Block } from "./types"
 
 
 /**
@@ -18,7 +18,7 @@ const id = ():string=>{
     return "" + _id
 }
 
-export const blocks:BlockList = [
+export const blocks:Block[] = [
     {
         type: BlockTypes.HFLOW,
         id:id(),
