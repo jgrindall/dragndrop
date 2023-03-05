@@ -8,7 +8,7 @@
     <hr/>
 
     <div class="snippets">
-      <HBlockRenderer :block="prog.snippets"></HBlockRenderer>
+      <HFlowBlockRenderer :block="prog.snippets"></HFlowBlockRenderer>
     </div>
   </div>
   
@@ -19,7 +19,7 @@ import {Program} from "./types"
 import { PropType, defineComponent } from 'vue';
 import * as _ from 'underscore'
 import Bus from "./Bus"
-import HBlockRenderer from "./HBlockRenderer.vue";
+import HFlowBlockRenderer from "./HFlowBlockRenderer.vue";
 
 type State = {
   bus: Bus
@@ -28,7 +28,7 @@ type State = {
 export default defineComponent({
   name: 'DragDrop',
   components: {
-    HBlockRenderer
+    HFlowBlockRenderer
   },
   provide() {
     this.bus = this.bus || new Bus(this.prog)

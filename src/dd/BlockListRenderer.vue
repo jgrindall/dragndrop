@@ -11,8 +11,8 @@
 <script lang="ts">
 import { IBus, BlockList, BlockTypes, Block} from "./types"
 import { PropType, defineComponent, inject } from 'vue';
-import HBlockRenderer from "./HBlockRenderer.vue";
-import IBlockRenderer from "./IBlockRenderer.vue";
+import HFlowBlockRenderer from "./HFlowBlockRenderer.vue";
+import IndentedBlockRenderer from "./IndentedBlockRenderer.vue";
 
 export default defineComponent({
   name: 'BlockListRenderer',
@@ -23,7 +23,7 @@ export default defineComponent({
   },
   methods:{
     getBlockType(block:Block){
-      return block.type === BlockTypes.HFLOW ? HBlockRenderer : IBlockRenderer
+      return block.type === BlockTypes.HFLOW ? HFlowBlockRenderer : IndentedBlockRenderer
     },
     isHFlow(block:Block){
       return block.type === BlockTypes.HFLOW
@@ -33,8 +33,8 @@ export default defineComponent({
     }
   },
   components: {
-    HBlockRenderer,
-    IBlockRenderer
+    HFlowBlockRenderer,
+    IndentedBlockRenderer
   },
   props:{
     blocks:{

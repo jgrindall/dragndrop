@@ -28,7 +28,7 @@ import ItemRenderer from "./ItemRenderer.vue";
 import { inject } from 'vue'
 
 export default defineComponent({
-  name: 'HBlockRenderer',
+  name: 'HFlowBlockRenderer',
   setup () {
     return {
       bus: inject<IBus>('bus')

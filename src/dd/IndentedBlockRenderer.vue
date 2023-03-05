@@ -16,10 +16,10 @@
 <script lang="ts">
 import { IBlock, IBus} from "./types"
 import { PropType, defineComponent, inject } from 'vue';
-import HBlockRenderer from "./HBlockRenderer.vue";
+import HBlockRenderer from "./HFlowBlockRenderer.vue";
 
 export default defineComponent({
-  name: 'IBlockRenderer',
+  name: 'IndentedBlockRenderer',
   setup () {
     return {
       bus: inject<IBus>('bus')
