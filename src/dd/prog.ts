@@ -1,4 +1,4 @@
-import { BlockList, Program, Item, HBlock } from "./types"
+import { BlockList, Program, Item, HBlock, BlockTypes } from "./types"
 
 
 /**
@@ -20,7 +20,7 @@ const id = ():string=>{
 
 export const blocks:BlockList = [
     {
-        type: "h",
+        type: BlockTypes.HFLOW,
         id:id(),
         children:[
             {
@@ -42,7 +42,7 @@ export const blocks:BlockList = [
         ]
     },
     {
-        type: "h",
+        type: BlockTypes.HFLOW,
         id:id(),
         children:[
             {
@@ -56,11 +56,11 @@ export const blocks:BlockList = [
         ]
     },
     {
-        type: "i",
+        type: BlockTypes.INDENTED,
         id:id(),
         top:{
             id:id(),
-            type: "h",
+            type: BlockTypes.HFLOW,
             children:[
                 {
                     id:id(),
@@ -70,7 +70,7 @@ export const blocks:BlockList = [
         },
         children:[
             {
-                type: "h",
+                type: BlockTypes.HFLOW,
                 id:id(),
                 children:[
                     {
@@ -85,7 +85,7 @@ export const blocks:BlockList = [
             },
             {
                 id:id(),
-                type: "h",
+                type: BlockTypes.HFLOW,
                 children:[
                     {
                         id:id(),
@@ -98,7 +98,7 @@ export const blocks:BlockList = [
 ]
 
 const snippets:HBlock = {
-    type: "h",
+    type: BlockTypes.HFLOW,
     id:id(),
     children:[
         {
@@ -107,11 +107,23 @@ const snippets:HBlock = {
         },
         {
             id:id(),
+            text: "if a >= b:"
+        },
+        {
+            id:id(),
             text: "add this too"
         },
         {
             id:id(),
             text: "and this"
+        },
+        {
+            id:id(),
+            text: "for i in range(10):"
+        },
+        {
+            id:id(),
+            text: "while j >= 0:"
         }
     ]
 }

@@ -1,10 +1,10 @@
 import Bus from '@/dd/Bus'
-import { HBlock } from '@/dd/types';
+import { HBlock, BlockTypes } from '@/dd/types';
 
 describe('Bus', () => {
   it('gets by id', () => {
     const snippets:HBlock = {
-      type: "h",
+      type: BlockTypes.HFLOW,
       id:"0",
       children:[]
     }

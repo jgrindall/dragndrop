@@ -1,5 +1,3 @@
-import { InjectionKey } from 'vue';
-
 export type Program = {
     blocks: BlockList,
     snippets: HBlock
@@ -14,14 +12,19 @@ export type Item = {
     text: string
 }
 
+export enum BlockTypes{
+    HFLOW = "hflow",
+    INDENTED = "indented"
+}
+
 export type HBlock = {
-    type: "h",
+    type: BlockTypes.HFLOW,
     id:string,
     children:Item[]
 }
 
 export type IBlock = {
-    type: "i",
+    type: BlockTypes.INDENTED,
     id:string,
     top:HBlock,
     children:BlockList

@@ -1,6 +1,6 @@
 import * as _ from 'underscore'
 import { reactive } from 'vue';
-import {DragData, Block, HBlock, Item, IBlock, IBus, Program, BlockList} from "./types"
+import {DragData, Block, HBlock, Item, IBlock, IBus, Program, BlockList, BlockTypes} from "./types"
 
 export default class Bus implements IBus{
   prog:Program
@@ -15,9 +15,14 @@ export default class Bus implements IBus{
     if(draggedBlock){
       const parentOfDraggedBlock: Block | null = this.getParentForId(data.draggedItemId)
       console.log("parentOfDraggedBlock", parentOfDraggedBlock);
-      if(parentOfDraggedBlock && parentOfDraggedBlock.type === "h"){
+      if(parentOfDraggedBlock && parentOfDraggedBlock.type === BlockTypes.HFLOW){
         parentOfDraggedBlock.children = _.without(parentOfDraggedBlock.children, draggedBlock as Item)
-        if(data.dropTarget.type === "h"){
+        const isEmpty = parentOfDraggedBlock.children.length === 0
+        if(isEmpty){
+           const parentOfParent = this.getParentForId(parentOfDraggedBlock.id)
+           console.log(parentOfParent, 'deletes', parentOfDraggedBlock)
+        }
+        if(data.dropTarget.type === BlockTypes.HFLOW){
           data.dropTarget.children = [
             ...data.dropTarget.children,
             draggedBlock as Item
@@ -25,6 +30,10 @@ export default class Bus implements IBus{
         }
       }
     }
+    this.deleteEmpty()
+  }
+  deleteEmpty(){
+    console.log("de")
   }
   getById(id:string): Block | Item | null{
 
@@ -32,7 +41,7 @@ export default class Bus implements IBus{
       if(block.id === id){
         return block
       }
-      else if(block.type === "h"){
+      else if(block.type === BlockTypes.HFLOW){
         for(const child of block.children){
           if(child.id === id){
             return child
@@ -70,7 +79,7 @@ export default class Bus implements IBus{
   getParentForId(id:string): Block | null{ 
 
     const _isChildOfBlock = (block:HBlock | IBlock): boolean=>{
-      if(block.type === "h"){
+      if(block.type === BlockTypes.HFLOW){
         const match = block.children.find(item => item.id === id)
         if(match){
           return true
@@ -90,11 +99,17 @@ export default class Bus implements IBus{
           if(inBlock){
             return block
           }
-          else if(block.type === "i"){
+          else if(block.type === BlockTypes.INDENTED){
             return _getParentForId(block.children)
           }
       }
       return null
+    }
+
+
+    const isSnippet = _isChildOfBlock(this.prog.snippets)
+    if(isSnippet){
+      return this.prog.snippets
     }
     return _getParentForId(this.prog.blocks)
   }
